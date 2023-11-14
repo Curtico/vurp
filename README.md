@@ -1,1 +1,2 @@
-# VURPERS
+# VURP
+VURP Ultimate Rop Processor
