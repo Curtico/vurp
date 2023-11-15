@@ -1,8 +1,5 @@
 FROM ubuntu:22.04
 
-MAINTAINER toconnor <toconnor@my.fit.edu>
-LABEL contributor="chake <chake2019@my.fit.edu>"
-
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/New_York
 ENV LANG en_US.UTF-8
@@ -68,10 +65,6 @@ RUN gem install one_gadget seccomp-tools && rm -rf /var/lib/gems/2.*/cache/*
 RUN wget https://github.com/radareorg/radare2/releases/download/5.8.8/radare2_5.8.8_amd64.deb && \
     dpkg -i radare2_5.8.8_amd64.deb && rm radare2_5.8.8_amd64.deb
 
-# install zsh
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.2/zsh-in-docker.sh)" -- \
-    -t crunch
-
 # install stuff for patching binaries with libc
 RUN apt-get update -qq -y && apt-get install -qq -y patchelf elfutils
 
@@ -86,6 +79,7 @@ RUN echo "flag{fake-flag}" > /flag.txt
 COPY libc/libc.so.6 /opt/libc.so.6 
 COPY libc/ld-2.27.so /opt/ld-2.27.so
 
-COPY exploit.py /exploit.py
+COPY vurp.py /vurp.py
+COPY ctfd_access_token /ctfd_access_token
 
-CMD ["python3", "exploit.py"]
+CMD ["python3", "vurp.py"]
