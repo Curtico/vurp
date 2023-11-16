@@ -27,11 +27,12 @@ def scan(binary):
 def detect_overflow(elf_proc, proc_):
     try:
         if elf_proc.sym['win']:  # ret2win check
+            print("Win Found ret2win detected :)")
             proc_.kill()
-            return 'ret2win'
+            return 'ret2win' # can change depending on how we wanna return things
     except KeyError:
-        print("win funciton not found")
+        print("detect_overflow Error:// win function not found")
         pass
-    return "Overflow Not Found"
+    return "Overflow Not Found :(" # in theory this should not happen
 
 # detecting overflow types soontm
