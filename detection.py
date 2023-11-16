@@ -5,27 +5,26 @@ context.update(
     endian="little",
     log_level="warning",
     os="linux",
-    #terminal=["tmux", "split-window", "-h", "-p 65"]
+    # terminal=["tmux", "split-window", "-h", "-p 65"]
     terminal=["st"]
 )
+
 
 def scan(binary):
     e = ELF(f"./{binary}")
     p = process(f"./{binary}")
-    #r = ROP(e)
+    # r = ROP(e)
 
-    #-- overflow time --#
+    # -- overflow time --#
     p.sendline(cyclic(3000))
     p.wait()
 
-    if p.poll() and p.poll() < 0:
-        detect_overflow()
+    if p.poll() and p.poll() < 0:  # maybe change to -11 in the future
+        return detect_overflow(e, p)  # ret2vurp in the future
     p.interactive()
 
 
-
-
-
-def detect_overflow():
-    print('Overflowed')
-#detecting overflow types soontm
+def detect_overflow(elf, proc):
+    if elf.sym['win']:  # ret2win check
+        return 'ret2win'
+# detecting overflow types soontm
