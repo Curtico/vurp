@@ -24,7 +24,14 @@ def scan(binary):
     p.interactive()
 
 
-def detect_overflow(elf, proc):
-    if elf.sym['win']:  # ret2win check
-        return 'ret2win'
+def detect_overflow(elf_proc, proc_):
+    try:
+        if elf_proc.sym['win']:  # ret2win check
+            proc_.kill()
+            return 'ret2win'
+    except KeyError:
+        print("win funciton not found")
+        pass
+    return "Overflow Not Found"
+
 # detecting overflow types soontm
