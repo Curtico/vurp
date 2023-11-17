@@ -18,9 +18,9 @@ The sample binaries provided to us at https://github.com/tj-connor/ace-binaries 
 
 | **Exploit** | **Initial Foothold** | **Exploit Progress** | **Detection Progress** |
 | ----------- | -------------------- | -------------------- | ---------------------- |
-| GOT Overwrite | Format string attack (printf) | :red_circle: Not started | :yellow_circle: In progress: [3-scan-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/3-scan-for-format-vulnerabilities) |
-| Printf Variable Leak | Format string attack (printf) | :red_circle: Not started | :yellow_circle: In progress: [3-scan-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/3-scan-for-format-vulnerabilities) |
-| Printf Variable Write | Format string attack (printf) | :red_circle: Not started | :yellow_circle: In progress: [3-scan-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/3-scan-for-format-vulnerabilities) |
+| GOT Overwrite | Format string attack (printf) | :yellow_circle: In progress: [5-exploits-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/5-exploits-for-format-vulnerabilities) | :yellow_circle: In progress: [3-scan-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/3-scan-for-format-vulnerabilities) |
+| Printf Variable Leak | Format string attack (printf) | :yellow_circle: In progress: [5-exploits-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/5-exploits-for-format-vulnerabilities) | :yellow_circle: In progress: [3-scan-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/3-scan-for-format-vulnerabilities) |
+| Printf Variable Write | Format string attack (printf) | :yellow_circle: In progress: [5-exploits-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/5-exploits-for-format-vulnerabilities) | :yellow_circle: In progress: [3-scan-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/3-scan-for-format-vulnerabilities) |
 | Ret2Execve | Buffer Overflow | :red_circle: Not started | :yellow_circle: In progress: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
 | Ret2One | Buffer Overflow | :red_circle: Not started | :yellow_circle: In progress: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
 | Ret2Syscall | Buffer Overflow | :red_circle: Not started | :yellow_circle: In progress: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
