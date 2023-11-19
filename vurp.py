@@ -7,6 +7,7 @@ import re
 
 import printf_write
 import printf_read
+import printf_got_overwrite
 # This helps debugging to shutup pwntools
 # context.log_level = 'ERROR'
 # logging.disable(logging.CRITICAL)
@@ -43,6 +44,10 @@ def exploit(binary, chal_id):
     elif 'bin-printf-read' in binary:
         flag = printf_read.exploit(binary)
         print(flag)
+    elif 'bin-got-overwrite' in binary:
+        flag = printf_got_overwrite.exploit(binary)
+        print(flag)
+    
     #send_flag(flag, chal_id) #UNCOMMENT OR OTHERWISE ADDRESS BEFORE SUBMISSION
 
 
@@ -119,8 +124,8 @@ if __name__ == "__main__":
     challenge_list = {i["name"]: int(i["id"]) for i in json_data}
     # -------------------------------- #
     # ----- Main Execution Loop! ----- #
-    print(challenge_list)
-    
+    #print(challenge_list)
+    '''
     for binary in os.listdir():
         try:
             if binary != "flag.txt":
@@ -129,15 +134,15 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"Failed to exploit {binary}: {e}")
     # -------------------------------- #
-    
-    #Used to test a specific type of binary
     '''
+    #Used to test a specific type of binary
+    
     for binary in os.listdir():
         try:
-            if 'bin-printf-write-var-' in binary:
+            if 'bin-got-overwrite' in binary:
                 exploit(binary, challenge_list[binary])
         except Exception as e:
             print(f"Failed to exploit {binary}: {e}")
-    '''
+    
     
     print("Exploitation Complete!") 
