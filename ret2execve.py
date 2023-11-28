@@ -18,7 +18,7 @@ def exploit(binary: str):
     payload = b''
 
     offset = detection.find_rip_offset(binary)
-    print("Offset:", offset)
+    #print("Offset:", offset)
 
     # ret2csu is extremely epic
     payload += cyclic(offset)

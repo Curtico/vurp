@@ -22,7 +22,8 @@ RUN apt-get install -y -qq \
     tmux \
     wget \
     python3-pip \
-    ruby-dev 
+    ruby-dev \
+    systemd-coredump
 
 RUN pip3 install --upgrade pip
 
@@ -72,6 +73,7 @@ WORKDIR /
  
 # enable core dumping
 RUN ulimit -c unlimited
+RUN sysctl -w kernel.core_pattern=core.%p
 
 RUN echo "flag{fake-flag}" > /flag.txt
 
@@ -79,7 +81,6 @@ RUN echo "flag{fake-flag}" > /flag.txt
 COPY libc/libc.so.6 /opt/libc.so.6 
 COPY libc/ld-2.27.so /opt/ld-2.27.so
 
-COPY vurp.py /vurp.py
-COPY ctfd_access_token /ctfd_access_token
+# Any COPY statements should go here
 
-CMD ["python3", "vurp.py"]
+CMD ["/bin/bash"] # CHANGE THIS
