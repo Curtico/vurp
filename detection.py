@@ -11,8 +11,8 @@ context.update(
 
 
 def scan(binary):
-    e = ELF(f"./{binary}")
-    p = process(f"./{binary}")
+    e = ELF(f"{binary}")
+    p = process(f"{binary}")
     # r = ROP(e)
 
     # -- overflow time --#
@@ -27,12 +27,32 @@ def scan(binary):
 def detect_overflow(elf_proc, proc_):
     try:
         if elf_proc.sym['win']:  # ret2win check
-            print("Win Found ret2win detected :)")
+            print("[+] Win Found ret2win detected :)")
             proc_.kill()
-            return 'ret2win' # can change depending on how we wanna return things
+            return 'ret2win'  # can change depending on how we wanna return things
     except KeyError:
-        print("detect_overflow Error:// win function not found")
+        print("[!] Win function not found")
         pass
-    return "Overflow Not Found :(" # in theory this should not happen
+
+    try:
+        if elf_proc.sym['system']:  # ret2win check
+            print("[+] Win Found ret2system detected :)")
+            proc_.kill()
+            return 'ret2system'  # can change depending on how we wanna return things
+    except KeyError:
+        print("[!] system function not found")
+        pass
+    proc_.kill() # keep with final return
+    return "Overflow Not Found :("  # in theory this should not happen
 
 # detecting overflow types soontm
+
+
+def find_rip_offset(binary: str):
+    p = process(binary)
+    p.sendline(cyclic(1024, n=8))
+    p.wait()
+    core = p.corefile
+    p.close()
+    os.remove(core.file.name)
+    return cyclic_find(core.read(core.rsp, 8), n=8)
