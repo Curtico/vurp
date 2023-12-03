@@ -43,9 +43,22 @@ def detect_overflow(elf_proc, proc_):
 
     try:
         if elf_proc.sym['system']:  # ret2win check
-            print("[+] Win Found ret2system detected :)")
+            try:
+                if next(elf_proc.search(b'/bin/sh')):
+                    print('[+] bin/sh ret2system')
+                    proc_.kill()
+                    return 'ret2system'
+            except:
+                print('[!] Not a bin.sh ret2system')
+            try:
+                if next(elf_proc.search(b'/bin/cat flag.txt')):
+                    print("[+] cat flag.txt ret2system")
+                    proc_.kill()
+                    return 'ret2system'
+            except:
+                print('[!] Not a bin/cat flag.txt ret2system')
             proc_.kill()
-            return 'ret2system'  # can change depending on how we wanna return things
+            return 'write gadget'  # can change depending on how we wanna return things
     except KeyError:
         print("[!] system function not found")
     try:
