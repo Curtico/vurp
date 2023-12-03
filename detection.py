@@ -35,13 +35,11 @@ def detect_overflow(elf_proc, proc_):
                     return 'arrayAbuse'
             except StopIteration:
                 print('[!] Array Abuse not detected')
-                pass
             print("[+] Win Found ret2win detected :)")
             proc_.kill()
             return 'ret2win or rop parameters'  # can change depending on how we wanna return things
     except KeyError:
         print("[!] Win function not found")
-        pass
 
     try:
         if elf_proc.sym['system']:  # ret2win check
@@ -50,7 +48,6 @@ def detect_overflow(elf_proc, proc_):
             return 'ret2system'  # can change depending on how we wanna return things
     except KeyError:
         print("[!] system function not found")
-        pass
     try:
         if elf_proc.sym['execve']:
             print('[+] Execve symbol found')
@@ -58,7 +55,6 @@ def detect_overflow(elf_proc, proc_):
             return 'ret2execve'
     except:
         print('[+] Execve symbol not found')
-        pass
     try:
         if next(elf_proc.search(b'<<< Leak: %p\n')):
             print('[+] Leak detected ret2one')
@@ -66,7 +62,6 @@ def detect_overflow(elf_proc, proc_):
             return 'ret2one'
     except:
         print('[!] Ret2one not detected')
-        pass
 
     try:
         if next(elf_proc.search(b'<<< CPUs %u .\n')):
@@ -75,7 +70,6 @@ def detect_overflow(elf_proc, proc_):
             return 'ret2syscall'
     except:
         print('[!] ret2syscall not found')
-        pass
 
     proc_.kill()  # keep with final return
     return "Overflow Not Found :("  # in theory this should not happen
