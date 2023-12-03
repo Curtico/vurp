@@ -66,6 +66,16 @@ def detect_overflow(elf_proc, proc_):
             return 'ret2one'
     except:
         print('[!] Ret2one not detected')
+        pass
+
+    try:
+        if next(elf_proc.search(b'<<< CPUs %u .\n')):
+            print('[+] ret2syscall detected')
+            proc_.kill()
+            return 'ret2syscall'
+    except:
+        print('[!] ret2syscall not found')
+        pass
 
     proc_.kill()  # keep with final return
     return "Overflow Not Found :("  # in theory this should not happen
