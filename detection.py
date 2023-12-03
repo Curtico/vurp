@@ -20,7 +20,8 @@ def scan(binary):
     p.wait()
 
     if p.poll() and p.poll() < 0:  # maybe change to -11 in the future
-        return detect_overflow(e, p)  # ret2vurp in the future
+        os.remove(p.corefile.file.name)
+        return detect_overflow(e, p)  # ret2vurp
     return "not an overflow"
 
 
