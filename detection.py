@@ -50,6 +50,22 @@ def detect_overflow(elf_proc, proc_):
     except KeyError:
         print("[!] system function not found")
         pass
+    try:
+        if elf_proc.sym['execve']:
+            print('[+] Execve symbol found')
+            proc_.kill()
+            return 'ret2execve'
+    except:
+        print('[+] Execve symbol not found')
+        pass
+    try:
+        if next(elf_proc.search(b'<<< Leak: %p\n')):
+            print('[+] Leak detected ret2one')
+            proc_.kill()
+            return 'ret2one'
+    except:
+        print('[!] Ret2one not detected')
+
     proc_.kill()  # keep with final return
     return "Overflow Not Found :("  # in theory this should not happen
 
