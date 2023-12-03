@@ -21,15 +21,23 @@ def scan(binary):
 
     if p.poll() and p.poll() < 0:  # maybe change to -11 in the future
         return detect_overflow(e, p)  # ret2vurp in the future
-    p.interactive()
+    return "not an overflow"
 
 
 def detect_overflow(elf_proc, proc_):
     try:
-        if elf_proc.sym['win']:  # ret2win check
+        if elf_proc.sym['win']:  # win symbol check
+            try:
+                if next(elf_proc.search(b'Replace it with a new item >>>')):
+                    print("[+] Win AND array abuse detected")
+                    proc_.kill()
+                    return 'arrayAbuse'
+            except StopIteration:
+                print('[!] Array Abuse not detected')
+                pass
             print("[+] Win Found ret2win detected :)")
             proc_.kill()
-            return 'ret2win'  # can change depending on how we wanna return things
+            return 'ret2win or rop parameters'  # can change depending on how we wanna return things
     except KeyError:
         print("[!] Win function not found")
         pass
@@ -42,8 +50,9 @@ def detect_overflow(elf_proc, proc_):
     except KeyError:
         print("[!] system function not found")
         pass
-    proc_.kill() # keep with final return
+    proc_.kill()  # keep with final return
     return "Overflow Not Found :("  # in theory this should not happen
+
 
 # detecting overflow types soontm
 
