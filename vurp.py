@@ -6,9 +6,10 @@ import json
 import re
 
 import ret2execve_intended
+import ret2libc
 # This helps debugging to shutup pwntools
-context.log_level = 'ERROR'
-logging.disable(logging.CRITICAL)
+#context.log_level = 'ERROR'
+#logging.disable(logging.CRITICAL)
 
 # Access token for team to make api calls
 context.update(
@@ -17,7 +18,7 @@ context.update(
     log_level="warning",
     os="linux",
     # terminal=["tmux", "split-window", "-h", "-p 65"]
-    terminal=["st"]
+    #terminal=["st"]
 )
 access_token = open('ctfd_access_token', 'r').read().strip()
 
@@ -42,9 +43,14 @@ flag_pattern = r'flag\{[^}]+\}'
 
 def exploit(binary, chal_id):
     #Using this type of thing in lieu of real detection for now.
-    if 'bin-ret2execve' in binary:
+    if 'printf' not in binary and 'write' not in binary:
         #Note: Github names aren't matching CTF names, so for now I'm just renaming the binaries.
-        flag = ret2execve_intended.exploit(binary)
+        #flag = ret2execve_intended.exploit(binary)
+        print(binary)
+        flag = ret2libc.exploit(binary)
+        for i in range(10):
+            if flag == None:
+                flag = ret2libc.exploit(binary)
         print(flag)
     
     #send_flag(flag, chal_id) #UNCOMMENT OR OTHERWISE ADDRESS BEFORE SUBMISSION
@@ -106,6 +112,7 @@ if __name__ == "__main__":
 
 
     # ----- Download Binary Repo ----- #
+    '''
     while(1):
         try:
             subprocess.run("git clone https://github.com/tj-oconnor/ace-binaries.git", shell=True)
@@ -113,6 +120,7 @@ if __name__ == "__main__":
             break
         except Exception as e:
             print("Failed to clone git repo!")
+    '''
     # -------------------------------- #
 
 
@@ -135,13 +143,26 @@ if __name__ == "__main__":
     # -------------------------------- #
     '''
     #Used to test a specific type of binary
-    
+    '''
     for binary in os.listdir():
         try:
             if 'bin-ret2execve' in binary:
                 exploit(binary, challenge_list[binary])
         except Exception as e:
             print(f"Failed to exploit {binary}: {e}")
+        
+    '''
     
+    for binary in os.listdir():
+        try:
+            if 'bin-' in binary:
+                exploit(binary, challenge_list[binary])
+        except Exception as e:
+            print(f"Failed to exploit {binary}: {e}")
+
+        
     
     print("Exploitation Complete!") 
+    
+#Works on ret2execve, ret2one, ret2syscall, ret2system
+#Fails on ret2win
