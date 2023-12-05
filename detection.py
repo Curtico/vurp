@@ -1,4 +1,5 @@
 from pwn import *
+import os
 
 context.update(
     arch="amd64",
@@ -7,7 +8,6 @@ context.update(
     os="linux",
     terminal=["st"]
 )
-
 
 def scan(binary):
 	e = ELF(f"./{binary}")
@@ -31,3 +31,12 @@ def detect_printf(bin, proc):
 		return True
 	else:
 		return False
+  
+def find_rip_offset(binary: str):
+    p = process(binary)
+    p.sendline(cyclic(1024, n=8))
+    p.wait()
+    core = p.corefile
+    p.close()
+    os.remove(core.file.name)
+    return cyclic_find(core.read(core.rsp, 8), n=8)
