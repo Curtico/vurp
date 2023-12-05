@@ -24,10 +24,10 @@ def detect_printf(bin, proc):
 
 	proc.sendline(payload)
 	output = proc.recvall().decode('utf-8')
-	print("This is what the payload is giving me\n:", output)
+	#print("This is what the payload is giving me\n:", output) - Testing
 
 	if '0x414141' or 'nil' in output: # Does this need to be bytes?
-		print ("Potential printf vulnerabilty found")
+		print ("Printf vulnerabilty found")
 		return True
 	else:
 		return False
