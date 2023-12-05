@@ -5,9 +5,6 @@ import os
 import json
 import re
 
-import printf_write
-import printf_read
-import printf_got_overwrite
 # This helps debugging to shutup pwntools
 # context.log_level = 'ERROR'
 # logging.disable(logging.CRITICAL)
@@ -35,20 +32,8 @@ flag_pattern = r'flag\{[^}]+\}'
 # ------------------------------------------------- #
 
 def exploit(binary, chal_id):
-    #Using this type of thing in lieu of real detection for now.
-    if 'bin-printf-write' in binary:
-        #Note: Github names aren't matching CTF names, so for now I'm just renaming the binaries.
-        flag = printf_write.exploit(binary)
-        print(flag)
-    #There must be a dummy flag.txt file with matching regex in the same directory as the binary that's being processed for the module in its current form to work.
-    elif 'bin-printf-read' in binary:
-        flag = printf_read.exploit(binary)
-        print(flag)
-    elif 'bin-got-overwrite' in binary:
-        flag = printf_got_overwrite.exploit(binary)
-        print(flag)
-    
-    #send_flag(flag, chal_id) #UNCOMMENT OR OTHERWISE ADDRESS BEFORE SUBMISSION
+    # TODO: Everything
+    print("Nothing here yet")
 
 
 # ------------------------------------------------- #
@@ -65,7 +50,6 @@ def send_exploit(binary, payload, chal_id):
     flag = re.findall(flag_pattern, p.recvall(timeout=0.2).decode())
     if flag:
         send_flag(flag, chal_id)
-        pass
     else:
         # This comment is for Chandler <3
         print("Remote Exploit didn't work!")
@@ -123,9 +107,8 @@ if __name__ == "__main__":
     json_data = json.loads(response.text).get("data", {})
     challenge_list = {i["name"]: int(i["id"]) for i in json_data}
     # -------------------------------- #
+
     # ----- Main Execution Loop! ----- #
-    #print(challenge_list)
-    '''
     for binary in os.listdir():
         try:
             if binary != "flag.txt":
@@ -134,15 +117,5 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"Failed to exploit {binary}: {e}")
     # -------------------------------- #
-    '''
-    #Used to test a specific type of binary
-    
-    for binary in os.listdir():
-        try:
-            if 'bin-got-overwrite' in binary:
-                exploit(binary, challenge_list[binary])
-        except Exception as e:
-            print(f"Failed to exploit {binary}: {e}")
-    
-    
-    print("Exploitation Complete!") 
+
+    print("Exploitation Complete!")
