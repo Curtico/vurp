@@ -20,7 +20,7 @@ def exploit(binary: str):
     #pid = gdb.attach(p, 'b *vuln+94\ncontinue')
     e = ELF(binary)
     rop = ROP(binary)
-    libc = ELF('/mnt/c/Users/Owner/Desktop/CTF_Files/autonomous_exploitation/libc.so.6')
+    libc = ELF('libc.so.6')
     
 
     payload = b''
