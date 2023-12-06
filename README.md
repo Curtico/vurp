@@ -27,8 +27,8 @@ The sample binaries provided to us at https://github.com/tj-connor/ace-binaries 
 | Ret2System | Buffer Overflow | :green_circle: Completed | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
 | Ret2Win | Buffer Overflow | :green_circle: Completed | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
 | ROP | Buffer Overflow | :red_circle: Not started | 🟡 Kinda: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
-| Write Gadgets | Buffer Overflow | :red_circle: Not started | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
-| Array Index* | | :red_circle: Not started | :red_circle: Not started |
+| Write Gadgets | Buffer Overflow | 🟢 Completed | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
+| Array Index* | | 🟢 Completed | 🟢 Completed |
 
 Once VURP can solve all of the standard binaries, we can see about getting the Bonus binaries solved.
 
