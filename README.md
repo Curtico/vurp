@@ -26,7 +26,7 @@ The sample binaries provided to us at https://github.com/tj-connor/ace-binaries 
 | Ret2Syscall | Buffer Overflow | :green_circle: Completed | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
 | Ret2System | Buffer Overflow | :green_circle: Completed | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
 | Ret2Win | Buffer Overflow | :green_circle: Completed | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
-| ROP | Buffer Overflow | :red_circle: Not started | 🟡 Kinda: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
+| ROP | Buffer Overflow | 🟢 Completed | 🟡 Kinda: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
 | Write Gadgets | Buffer Overflow | 🟢 Completed | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
 | Array Index* | | 🟢 Completed | 🟢 Completed |
 
