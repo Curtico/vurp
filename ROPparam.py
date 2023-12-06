@@ -14,8 +14,8 @@ context.update(
     terminal=["st"]
 )
 
-# MUST BE CALLED STARTING WITH FALSE
-def exploit(binary: str, movaps):
+# MUST BE CALLED STARTING WITH FALSE and 1
+def exploit(binary: str, movaps, times):
     flag_regex = r'flag\{[^}]+\}'
 
     url = f'ace-service-{binary}.chals.io'
@@ -67,8 +67,10 @@ def exploit(binary: str, movaps):
     flag = re.findall(flag_regex, output.decode())
     if flag:
         return flag[0]
+    elif times != 0:
+        return exploit(binary, True, 0)
     else:
-        return exploit(binary, True)
+        return None
 
 
 
