@@ -18,15 +18,15 @@ The sample binaries provided to us at https://github.com/tj-oconnor/ace-binaries
 
 | **Exploit** | **Initial Foothold** | **Exploit Progress** | **Detection Progress** |
 | ----------- | -------------------- | -------------------- | ---------------------- |
-| GOT Overwrite | Format string attack (printf) | 🟡 In progress: [5-exploits-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/5-exploits-for-format-vulnerabilities) | 🟡 In progress: [3-scan-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/3-scan-for-format-vulnerabilities) |
-| Printf Variable Leak | Format string attack (printf) | 🟡 In progress: [5-exploits-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/5-exploits-for-format-vulnerabilities) | 🟡 In progress: [3-scan-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/3-scan-for-format-vulnerabilities) |
-| Printf Variable Write | Format string attack (printf) | 🟡 In progress: [5-exploits-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/5-exploits-for-format-vulnerabilities) | 🟡 In progress: [3-scan-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/3-scan-for-format-vulnerabilities) |
+| GOT Overwrite | Format string attack (printf) | 🟢 Completed: [5-exploits-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/5-exploits-for-format-vulnerabilities) | 🟢 Completed: [3-scan-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/3-scan-for-format-vulnerabilities) |
+| Printf Variable Leak | Format string attack (printf) | 🟢 Completed: [5-exploits-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/5-exploits-for-format-vulnerabilities) | 🟢 Completed: [3-scan-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/3-scan-for-format-vulnerabilities) |
+| Printf Variable Write | Format string attack (printf) | 🟢 Completed: [5-exploits-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/5-exploits-for-format-vulnerabilities) | 🟢 Completed: [3-scan-for-format-vulnerabilities](https://github.com/Curtico/vurp/tree/3-scan-for-format-vulnerabilities) |
 | Ret2Execve | Buffer Overflow | :green_circle: Completed | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
 | Ret2One | Buffer Overflow | :green_circle: Completed | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
 | Ret2Syscall | Buffer Overflow | :green_circle: Completed | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
 | Ret2System | Buffer Overflow | :green_circle: Completed | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
 | Ret2Win | Buffer Overflow | :green_circle: Completed | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
-| ROP | Buffer Overflow | 🟢 Completed | 🟡 Kinda: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
+| ROP | Buffer Overflow | 🟢 Completed | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
 | Write Gadgets | Buffer Overflow | 🟢 Completed | 🟢 Completed: [2-scan-for-buffer-overflow-dynamically](https://github.com/Curtico/vurp/tree/2-scan-for-buffer-overflow-dynamically) |
 | Array Index | | 🟢 Completed | 🟢 Completed |
 

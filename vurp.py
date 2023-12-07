@@ -237,7 +237,18 @@ if __name__ == "__main__":
 
     # ----- Main Execution Loop! ----- #
     flags = []
+    #print(os.listdir())
+    #e = ELF("bin-56")
+    #p = process(e.path)
     for binary in os.listdir():
+        if ".txt" not in binary and ".py" not in binary and ".gdb" not in binary:
+            if "_patched" not in binary:
+                subprocess.run(f"pwninit --bin {binary} --libc /opt/libc.so.6 --ld /opt/ld-2.27.so --no-template && mv {binary}_patched {binary}", shell=True, stdout=PIPE, stderr=PIPE)
+            corrected = binary.replace("_", "-")
+            #os.system(target=execute, args=(binary, challenge_list[corrected])))
+    
+    for binary in os.listdir():
+        
         try:
             if binary != "flag.txt":
                 # Call exploit with id of each challenge to submit flag

