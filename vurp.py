@@ -195,6 +195,8 @@ if __name__ == "__main__":
     while(1):
         try:
             subprocess.run("git clone https://github.com/tj-oconnor/ace-binaries.git", shell=True)
+            os.rename("libc.so.6", "ace-binaries/test-binaries/libc.so.6")
+            os.rename("flag.txt", "ace-binaries/test-binaries/flag.txt")
             os.chdir("ace-binaries/test-binaries") # CHANGE THIS EVENTUALLY
             break
         except Exception as e:
