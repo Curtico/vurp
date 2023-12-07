@@ -3,7 +3,6 @@ from pwn import *
 import angr, angrop
 import detection
 import re
-from scapy.all import *
 
 context.update(
     arch="amd64",
