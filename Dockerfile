@@ -85,6 +85,7 @@ COPY libc/ld-2.27.so /opt/ld-2.27.so
 COPY start.sh /start.sh
 COPY id_rsa /id_rsa
 COPY id_rsa.pub /id_rsa.pub
+COPY ctfd_access_token /ctfd_access_token
 
 ENV GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /id_rsa"
 
