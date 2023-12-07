@@ -69,6 +69,10 @@ def exploit(binary, chal_id): # ADD chal_id BACK FOR COMP
         print(f'[!] ret2system = {flag}')
         if flag != None:
             return flag
+        flag = ret2libc.exploit(binary)
+        print(f'[!] flag for ret2one = {flag}')
+        if flag != None:
+            return flag
     elif exploit_type == 'write gadget':
         flag = angrwritegadget.exploit(binary,False, 1)
         print(f'[!] flag for write_gadget = {flag}')
@@ -77,6 +81,10 @@ def exploit(binary, chal_id): # ADD chal_id BACK FOR COMP
     elif exploit_type == 'ret2execve':
         flag = ret2execve.exploit(binary)
         print(f'[!] flag for ret2execve = {flag}')
+        if flag != None:
+            return flag
+        flag = ret2libc.exploit(binary)
+        print(f'[!] flag for ret2one = {flag}')
         if flag != None:
             return flag
     elif exploit_type == 'ret2one':
