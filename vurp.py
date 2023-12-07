@@ -237,7 +237,7 @@ if __name__ == "__main__":
     #e = ELF("bin-56")
     #p = process(e.path)
     for binary in os.listdir():
-        if ".txt" not in file and ".py" not in file and ".gdb" not in file:
+        if ".txt" not in binary and ".py" not in binary and ".gdb" not in binary:
             if "_patched" not in file:
                 subprocess.run(f"pwninit --bin {file} --libc /opt/libc.so.6 --ld /opt/ld-2.27.so --no-template && mv {file}_patched {file}", shell=True, stdout=PIPE, stderr=PIPE)
             corrected = file.replace("_", "-")
