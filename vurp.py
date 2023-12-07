@@ -238,10 +238,10 @@ if __name__ == "__main__":
     #p = process(e.path)
     for binary in os.listdir():
         if ".txt" not in binary and ".py" not in binary and ".gdb" not in binary:
-            if "_patched" not in file:
-                subprocess.run(f"pwninit --bin {file} --libc /opt/libc.so.6 --ld /opt/ld-2.27.so --no-template && mv {file}_patched {file}", shell=True, stdout=PIPE, stderr=PIPE)
-            corrected = file.replace("_", "-")
-            jobs.append(Process(target=execute, args=(file, challenge_list[corrected])))
+            if "_patched" not in binary:
+                subprocess.run(f"pwninit --bin {binary} --libc /opt/libc.so.6 --ld /opt/ld-2.27.so --no-template && mv {binary}_patched {binary}", shell=True, stdout=PIPE, stderr=PIPE)
+            corrected = binary.replace("_", "-")
+            jobs.append(Process(target=execute, args=(binary, challenge_list[corrected])))
     
     for binary in os.listdir():
         
