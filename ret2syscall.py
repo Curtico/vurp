@@ -41,4 +41,3 @@ def exploit(binary: str):
     else: # Failure
         return
 
-print(exploit('bin-ret2syscall-9'))
