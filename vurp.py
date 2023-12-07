@@ -16,6 +16,7 @@ import ret2libc
 import arrayabuse
 import printf_write
 import bonus
+import ret2win2
 
 # This helps debugging to shutup pwntools
 # context.log_level = 'ERROR'
@@ -51,10 +52,11 @@ def exploit(binary, chal_id): # ADD chal_id BACK FOR COMP
 
     if exploit_type == 'ret2win or rop parameters':
         print('[+] Vurp detected re2win or rop parameters')
-        flag = re2win.exploit(binary)
+        flag = ret2win2.exploit(binary,False,1)
         if flag:
             print(f'[!] flag for re2win/rop = {flag}')
-            return flag
+            if flag != None:
+                return flag
         else:
             flag = ROPparam.exploit(binary,False,1)
             print(f'[!] flag for re2win/rop = {flag}')
