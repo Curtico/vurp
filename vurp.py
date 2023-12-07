@@ -235,6 +235,7 @@ if __name__ == "__main__":
     flags = []
     print(os.listdir())
     e = ELF("bin-56")
+    p = process('bin-56')
     for binary in os.listdir():
         
         try:
