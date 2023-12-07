@@ -64,6 +64,10 @@ def exploit(binary, chal_id): # ADD chal_id BACK FOR COMP
             print(f'[!] flag for re2win/rop = {flag}')
             if flag != None:
                 return flag
+            flag = ret2libc.exploit(binary)
+            print(f'[!] flag for ret2one = {flag}')
+            if flag != None:
+                return flag
     elif exploit_type == 'ret2system':
         flag = ret2system.exploit(binary)
         print(f'[!] ret2system = {flag}')
