@@ -17,6 +17,8 @@ import arrayabuse
 import printf_write
 import bonus
 import ret2win2
+import ret2one
+import ret2syscall
 
 # This helps debugging to shutup pwntools
 # context.log_level = 'ERROR'
@@ -82,8 +84,16 @@ def exploit(binary, chal_id): # ADD chal_id BACK FOR COMP
         print(f'[!] flag for ret2one = {flag}')
         if flag != None:
             return flag
+        flag = ret2one.exploit(binary)
+        print(f'[!] flag for ret2one = {flag}')
+        if flag != None:
+            return flag
     elif exploit_type == 'ret2syscall':
         flag = ret2libc.exploit(binary)
+        print(f'[!] flag for ret2syscall = {flag}')
+        if flag != None:
+            return flag
+        flag = ret2syscall.exploit(binary)
         print(f'[!] flag for ret2syscall = {flag}')
         if flag != None:
             return flag
