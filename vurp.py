@@ -233,9 +233,9 @@ if __name__ == "__main__":
 
     # ----- Main Execution Loop! ----- #
     flags = []
-    print(os.listdir())
-    e = ELF("bin-56")
-    p = process(e.path)
+    #print(os.listdir())
+    #e = ELF("bin-56")
+    #p = process(e.path)
     for binary in os.listdir():
         if ".txt" not in file and ".py" not in file and ".gdb" not in file:
             if "_patched" not in file:
