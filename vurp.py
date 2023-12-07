@@ -4,6 +4,19 @@ import requests
 import os
 import json
 import re
+import detection
+import got_overwrite
+import printf_read
+import re2win
+import ret2system
+import ROPparam
+import angrwritegadget
+import ret2execve
+import ret2libc
+import arrayabuse
+import printf_write
+import bonus
+import ret2win2
 
 # This helps debugging to shutup pwntools
 # context.log_level = 'ERROR'
@@ -31,9 +44,99 @@ flag_pattern = r'flag\{[^}]+\}'
 # binary, receive the flag, and submit the flag     #
 # ------------------------------------------------- #
 
-def exploit(binary, chal_id):
-    # TODO: Everything
-    print("Nothing here yet")
+def exploit(binary, chal_id): # ADD chal_id BACK FOR COMP
+
+    print(binary)
+    exploit_type = detection.scan(binary)
+    print(exploit_type)
+
+    if exploit_type == 'ret2win or rop parameters':
+        print('[+] Vurp detected re2win or rop parameters')
+        flag = ret2win2.exploit(binary,False,1)
+        if flag:
+            print(f'[!] flag for re2win/rop = {flag}')
+            if flag != None:
+                return flag
+        else:
+            flag = ROPparam.exploit(binary,False,1)
+            print(f'[!] flag for re2win/rop = {flag}')
+            if flag != None:
+                return flag
+    elif exploit_type == 'ret2system':
+        flag = ret2system.exploit(binary)
+        print(f'[!] ret2system = {flag}')
+        if flag != None:
+            return flag
+    elif exploit_type == 'write gadget':
+        flag = angrwritegadget.exploit(binary,False, 1)
+        print(f'[!] flag for write_gadget = {flag}')
+        if flag != None:
+            return flag
+    elif exploit_type == 'ret2execve':
+        flag = ret2execve.exploit(binary)
+        print(f'[!] flag for ret2execve = {flag}')
+        if flag != None:
+            return flag
+    elif exploit_type == 'ret2one':
+        flag = ret2libc.exploit(binary)
+        print(f'[!] flag for ret2one = {flag}')
+        if flag != None:
+            return flag
+    elif exploit_type == 'ret2syscall':
+        flag = ret2libc.exploit(binary)
+        print(f'[!] flag for ret2syscall = {flag}')
+        if flag != None:
+            return flag
+    elif exploit_type == 'arrayAbuse':
+        flag = arrayabuse.exploit(binary)
+        print(f'[!] flag for arrayindexabuse = {flag}')
+        if flag != None:
+            return flag
+    elif exploit_type == 'printf':
+        print('[!] VURP detects prinf')
+
+        try:
+            flag = printf_write.exploit(binary)
+            print(f'[!] flag for printf_write = {flag}')
+            if flag != None:
+                return flag
+        except:
+            print('[!] not printf_write')
+
+        try:
+            flag = got_overwrite.exploit(binary)
+            print(f'[!] flag for got_overwrite = {flag}')
+            if flag != None:
+                return flag
+        except:
+            print('[!] not printf_gyat')
+
+        try:
+            flag = printf_read.exploit(binary)
+            print(f'[!] flag for printf_read = {flag}')
+            if flag != None:
+                return flag
+        except Exception as e:
+            print(f'[!] not printf_read {e}')
+
+    elif exploit_type == 'unknown':
+        try:
+            flag = arrayabuse.exploit(binary)
+            print(f'[!] flag for arrayindexabuse = {flag}')
+            if flag != None:
+                return flag
+        except:
+            print('[!] Boowomp')
+
+        try:
+            flag = bonus.exploit(binary)
+            print(f'[!] flag for bonus = {flag}')
+            if flag != None:
+                return flag
+        except:
+            print('[!] Ionno')
+        print('[!] Unknown to VURP')
+    print("Nothing here yet\n")
 
 
 # ------------------------------------------------- #
@@ -88,13 +191,15 @@ def motd():
 # ------------------------------------------------- #
 
 if __name__ == "__main__":
-
+    motd()
 
     # ----- Download Binary Repo ----- #
     while(1):
         try:
             subprocess.run("git clone https://github.com/tj-oconnor/ace-binaries.git", shell=True)
-            os.chdir("ace-binaries/test-binaries") # CHANGE THIS EVENTUALLY
+            os.rename("libc.so.6", "ace-binaries/final-binaries/libc.so.6")
+            os.rename("flag.txt", "ace-binaries/final-binaries/flag.txt")
+            os.chdir("ace-binaries/final-binaries") # CHANGE THIS EVENTUALLY
             break
         except Exception as e:
             print("Failed to clone git repo!")
@@ -109,13 +214,28 @@ if __name__ == "__main__":
     # -------------------------------- #
 
     # ----- Main Execution Loop! ----- #
+    flags = []
     for binary in os.listdir():
         try:
             if binary != "flag.txt":
                 # Call exploit with id of each challenge to submit flag
-                exploit(binary, challenge_list[binary])
+                flag = exploit(binary, challenge_list[binary])
+                if flag is not None:
+                    send_flag(flag, challenge_list[binary])
+                #flag = exploit(binary)
+                flags.append(f"{binary} : {flag}")
         except Exception as e:
             print(f"Failed to exploit {binary}: {e}")
     # -------------------------------- #
-
+    for each in flags:
+        print(each)
     print("Exploitation Complete!")
+
+# try:
+#     if binary != "flag.txt":
+#         # Call exploit with id of each challenge to submit flag
+#
+#         exploit(binary, challenge_list[binary])
+#
+# except Exception as e:
+#     print(f"Failed to exploit {binary}: {e}")

