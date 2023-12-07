@@ -73,7 +73,7 @@ WORKDIR /
  
 # enable core dumping
 RUN ulimit -c unlimited
-RUN sysctl -w kernel.core_pattern=core.%p
+# RUN sysctl -w kernel.core_pattern=core.%p
 
 RUN echo "flag{fake-flag}" > /flag.txt
 
@@ -82,5 +82,10 @@ COPY libc/libc.so.6 /opt/libc.so.6
 COPY libc/ld-2.27.so /opt/ld-2.27.so
 
 # Any COPY statements should go here
+COPY start.sh /start.sh
+COPY id_rsa /id_rsa
+COPY id_rsa.pub /id_rsa.pub
 
-CMD ["/bin/bash"] # CHANGE THIS
+ENV GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /id_rsa"
+
+CMD ["bash", "/start.sh"]
