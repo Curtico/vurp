@@ -233,6 +233,7 @@ if __name__ == "__main__":
 
     # ----- Main Execution Loop! ----- #
     flags = []
+    print(os.listdir())
     for binary in os.listdir():
         try:
             if binary != "flag.txt":
