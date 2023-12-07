@@ -197,7 +197,7 @@ if __name__ == "__main__":
             subprocess.run("git clone https://github.com/tj-oconnor/ace-binaries.git", shell=True)
             os.rename("libc.so.6", "ace-binaries/final-binaries/libc.so.6")
             os.rename("flag.txt", "ace-binaries/final-binaries/flag.txt")
-            os.chdir("ace-binaries/test-binaries") # CHANGE THIS EVENTUALLY
+            os.chdir("ace-binaries/final-binaries") # CHANGE THIS EVENTUALLY
             break
         except Exception as e:
             print("Failed to clone git repo!")
