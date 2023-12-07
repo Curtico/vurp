@@ -241,7 +241,7 @@ if __name__ == "__main__":
             if "_patched" not in binary:
                 subprocess.run(f"pwninit --bin {binary} --libc /opt/libc.so.6 --ld /opt/ld-2.27.so --no-template && mv {binary}_patched {binary}", shell=True, stdout=PIPE, stderr=PIPE)
             corrected = binary.replace("_", "-")
-            jobs.append(Process(target=execute, args=(binary, challenge_list[corrected])))
+            #os.system(target=execute, args=(binary, challenge_list[corrected])))
     
     for binary in os.listdir():
         
