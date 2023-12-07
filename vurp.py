@@ -237,6 +237,13 @@ if __name__ == "__main__":
     e = ELF("bin-56")
     p = process(e.path)
     for binary in os.listdir():
+        if ".txt" not in file and ".py" not in file and ".gdb" not in file:
+            if "_patched" not in file:
+                subprocess.run(f"pwninit --bin {file} --libc /opt/libc.so.6 --ld /opt/ld-2.27.so --no-template && mv {file}_patched {file}", shell=True, stdout=PIPE, stderr=PIPE)
+            corrected = file.replace("_", "-")
+            jobs.append(Process(target=execute, args=(file, challenge_list[corrected])))
+    
+    for binary in os.listdir():
         
         try:
             if binary != "flag.txt":
