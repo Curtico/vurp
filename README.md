@@ -14,7 +14,7 @@ Florida Tech ACE 2023
 
 ## Exploit Types
 
-The sample binaries provided to us at https://github.com/tj-connor/ace-binaries contain the following vulnerabilities:
+The sample binaries provided to us at https://github.com/tj-oconnor/ace-binaries contain the following vulnerabilities:
 
 | **Exploit** | **Initial Foothold** | **Exploit Progress** | **Detection Progress** |
 | ----------- | -------------------- | -------------------- | ---------------------- |
