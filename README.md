@@ -2,6 +2,7 @@
 
 Florida Tech ACE 2023
 
+Results: VURP cracked 143 out of the 150 competition binaries, giving us a strong second-place finish. 
 ## Team
 | **Name** | **Email** | **Affiliation** |
 | -------- | --------- | --------------- |
